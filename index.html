@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="phoneList">
+<head>
+    <meta charset="UTF-8">
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="js/controller.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Phone List</title>
+</head>
+<body>
+    <div ng-controller="listCtrl" class="jumbotron app">
+        <h3>Phone List</h3>
+        <table class="table table-bordered tableList" ng-if="isContactsEmpty(contacts)">
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Operator</th>
+            </tr>
+            <tr ng-repeat="contact in contacts" ng-class="{'selected': contact.selected}">
+                <td><input type="checkbox" ng-model="contact.selected"> </td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.number}}</td>
+                <td>{{contact.operator.name}}</td>
+            </tr>
+        </table>
+
+        <input type="text" class="form-control" ng-model="contact.name" placeholder="Name">
+        <input type="text" class="form-control"  ng-model="contact.number" placeholder="Number">
+        <select ng-options="operator.name for operator in operators" ng-model="contact.operator" class="form-control" >
+            <option value="">Select an operator</option>
+        </select>
+
+        <button ng-click="addContact(contact)" ng-disabled="!contact.name || !contact.number || !contact.operator" class="btn btn-primary btn-block">Add Contact</button>
+        <button ng-click="removeContact(contacts)" ng-disabled="!isSelected(contacts)" class="btn btn-danger btn-block">Remove Contact</button>
+    </div>
+</body>
+</html>
